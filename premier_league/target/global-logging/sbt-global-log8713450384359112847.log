@@ -1,0 +1,42 @@
+[debug] > Exec(early(addDefaultCommands), None, None)
+[debug] > Exec(addDefaultCommands, None, None)
+[debug] > Exec(early(initialize), None, None)
+[debug] > Exec(initialize, None, None)
+[debug] > Exec(boot, None, None)
+[debug] > Exec(writeSbtVersion, None, None)
+[debug] > Exec(reload, None, None)
+[debug] > Exec(sbtStashOnFailure, None, None)
+[debug] > Exec(onFailure loadFailed, None, None)
+[debug] > Exec(loadp, None, None)
+[info] welcome to sbt 1.7.1 (Private Build Java 1.8.0_342)
+[debug] Load.defaultLoad until apply took 335.443497ms
+[debug]           Load.loadUnit: plugins took 374.817767ms
+[debug]           Load.loadUnit: defsScala took 0.509934ms
+[debug] [Loading] Scanning directory /home/user/IdeaProjects/premier_league/project
+[debug] [Loading] Found non-root projects 
+[debug] [Loading] Done in /home/user/IdeaProjects/premier_league/project, returning: ()
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin)))
+[debug] Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)
+[debug] Plugins.deducer#function took 32.402552 ms
+[debug]               Load.resolveProject(premier_league-build) took 79.939821ms
+[debug]             Load.loadTransitive: finalizeProject(Project(id premier_league-build, base: /home/user/IdeaProjects/premier_league/project, plugins: List(<none>))) took 152.271419ms
+[debug] [Loading] Done in /home/user/IdeaProjects/premier_league/project, returning: (premier_league-build)
+[debug]           Load.loadUnit: loadedProjectsRaw took 189.232812ms
+[debug]           Load.loadUnit: cleanEvalClasses took 1.587206ms
+[debug]         Load.loadUnit(file:/home/user/IdeaProjects/premier_league/project/, ...) took 588.435528ms
+[debug]       Load.apply: load took 1630.992841ms
+[debug]       Load.apply: resolveProjects took 72.667498ms
+[debug]       Load.apply: finalTransforms took 254.393242ms
+[debug]       Load.apply: config.delegates took 39.63597ms
+[debug]       Load.apply: Def.make(settings)... took 1661.443002ms
