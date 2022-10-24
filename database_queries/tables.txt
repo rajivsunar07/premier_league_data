@@ -1,0 +1,2 @@
+create key
+create table fixtures (code text, event text, kickoff_time timestamp, finished boolean, minutes time, team_a text, team_h text, team_a_score int, team_h_score int, id text, PRIMARY KEY (event, finished, kickoff_time));
