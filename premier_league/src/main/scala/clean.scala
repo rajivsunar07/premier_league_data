@@ -7,31 +7,37 @@ object PremierLeague {
       .appName("premier_league")
       .master("local[1]")
       .getOrCreate()
-    val destination_dir = "/home/user/Documents/projects/premier_league_data/data"
-    val teams_df = spark.read.json(destination_dir + "/teams.json")
-    val fixtures_df = spark.read.json(destination_dir + "/fixtures.json")
 
-    val goals_a = fixtures_df
-      .groupBy("team_a")
-      .sum("team_a_score", "team_h_score")
-      .withColumnRenamed("sum(team_a_score)", "away_goals_scored")
-      .withColumnRenamed("sum(team_h_score)", "away_goals_conceded")
-    val goals_h = fixtures_df
-      .groupBy("team_h")
-      .sum("team_h_score", "team_a_score")
-      .withColumnRenamed("sum(team_h_score)", "home_goals_scored")
-      .withColumnRenamed("sum(team_a_score)", "home_goals_conceded")
+    spark.conf.set("spark.cassandra.connection.host", sys.env("CASSANDRA_HOST"))
+    spark.conf.set("spark.cassandra.connection.host", sys.env("CASSANDRA_PORT"))
+    spark.conf.set("spark.cassandra.auth.username", sys.env("CASSANDRA_PASSWORD"))
+    spark.conf.set("spark.cassandra.auth.password", sys.env("CASSANDRA_USERNAME"))
+//
+//    spark.conf.set(s"spark.sql.catalog.cassadrancatalog", "com.datastax.spark.connector.datasource.CassandraCatalog")
+//
+//    spark.sql("CREATE DATABASE IF NOT EXISTS cassadrancatalog.testks WITH DBPROPERTIES (class='SimpleStrategy',replication_factor='1')")
 
-    val total_goals = goals_h
-      .join(goals_a, goals_h("team_h") === goals_a("team_a"))
-      .drop("team_a")
-      .withColumnRenamed("team_h", "team")
+    val destination_dir = sys.env.get("DESTINATION_DIR")
+    print(destination_dir)
+    val teams_df = spark.read.json(destination_dir + "teams.json")
+    val fixtures_df = spark.read.json(destination_dir + "fixtures.json")
+    val events_df = spark.read.json(destination_dir + "events.json")
 
-    val total_goals_name = total_goals
-      .join(teams_df, teams_df("code") === total_goals("team"))
-      .select("code","short_name", "name", "home_goals_scored", "home_goals_conceded", "away_goals_scored",
-      "away_goals_conceded")
-    total_goals_name.show()
+    //    Joining fixtures with their team names
+    val fixtures_teams = fixtures_df
+      .join(teams_df, fixtures_df("team_a") === teams_df("id"))
+      .withColumnRenamed("name", "team_a_name")
+      .select("team_a_name", "event", "team_h", "team_h_score", "team_a_score", "finished", "minutes", "kickoff_time", "started")
+      .join(teams_df, fixtures_df("team_h") === teams_df("id"))
+      .withColumnRenamed("name", "team_h_name")
+      .select("team_a_name", "event", "team_h_name", "team_h_score", "team_a_score", "finished", "minutes", "kickoff_time", "started")
+      .join(events_df.select("id", "name"), events_df("id") === fixtures_df("event"))
+      .withColumnRenamed("name", "gameweek")
+      .select("team_a_name", "gameweek", "team_h_name", "team_h_score", "team_a_score", "finished", "minutes", "kickoff_time", "started")
+      .na.fill("2025-08-06T14:00:00Z", Array("kickoff_time"))
+      .na.fill("Gameweek 0", Array("gameweek"))
+
+
 
   }
 }
