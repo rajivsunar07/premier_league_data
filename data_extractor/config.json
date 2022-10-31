@@ -1,6 +1,6 @@
 {
     "api": "https://fantasy.premierleague.com/api/",
-    "destination_dir": "/home/user/Documents/projects/premier_league_data/data",
+    "destination_dir": "/Users/rajivsunar/Documents/projects/premier_league_data/data",
     "endpoints": [
         "fixtures/",
         "bootstrap-static/"

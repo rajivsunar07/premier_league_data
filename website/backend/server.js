@@ -9,7 +9,7 @@ const client = new cassandra.Client({
   authProvider: new PlainTextAuthProvider('cassandra', 'cassandra')
 });
 
-const query = 'SELECT * FROM test.fixtures where finished = False order by kickoff_time, event';
+
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -25,8 +25,10 @@ app.use((req, res, next) => {
 });
 
 app.get('/upcoming_fixtures', (req, res) => {
+  const query = "SELECT * FROM premier.fixtures_by_gameweek where finished=False order by started, kickoff_time limit 10";
   client.execute(query)
   .then(result => {
+    console.log(result.rows)
     res.json(result.rows)
   })
 
